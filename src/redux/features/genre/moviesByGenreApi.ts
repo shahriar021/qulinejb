@@ -1,8 +1,9 @@
+import { GenresResponse } from "@/src/types/genre";
 import { baseApi } from "../../createdApi/baseApi";
 
 const genreMovies = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getAllGenre: builder.query<any, void>({
+    getAllGenre: builder.query<GenresResponse, void>({
       query: () => {
         return {
           url: "/genre/movie/list",
@@ -16,7 +17,7 @@ const genreMovies = baseApi.injectEndpoints({
         return {
           url: "/discover/movie",
           params: {
-            with_genres: genreId, // This is the secret ingredient!
+            with_genres: genreId,
             language: "en-US",
             sort_by: "popularity.desc",
           },

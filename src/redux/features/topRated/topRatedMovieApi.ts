@@ -1,8 +1,9 @@
+import { Movie, MovieResponse } from "@/src/types/movie";
 import { baseApi } from "../../createdApi/baseApi";
 
 const topRated = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getTopRated: builder.query<any,void>({
+    getTopRated: builder.query<MovieResponse, void>({
       query: () => {
         return {
           url: "/movie/top_rated",
