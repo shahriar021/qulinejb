@@ -1,4 +1,4 @@
-import { Movie, MovieResponse } from "@/src/types/movie";
+import {  MovieResponse } from "@/src/types/movie";
 import { baseApi } from "../../createdApi/baseApi";
 
 const topRated = baseApi.injectEndpoints({

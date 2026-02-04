@@ -13,7 +13,7 @@ const genreMovies = baseApi.injectEndpoints({
     }),
 
     getMoviesByGenre: builder.query({
-      query: ({genreId,sortBy}) => {
+      query: ({ genreId, sortBy }) => {
         return {
           url: "/discover/movie",
           params: {
