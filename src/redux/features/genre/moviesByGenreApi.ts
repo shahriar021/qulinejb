@@ -13,13 +13,13 @@ const genreMovies = baseApi.injectEndpoints({
     }),
 
     getMoviesByGenre: builder.query({
-      query: (genreId) => {
+      query: ({genreId,sortBy}) => {
         return {
           url: "/discover/movie",
           params: {
             with_genres: genreId,
             language: "en-US",
-            sort_by: "popularity.desc",
+            sort_by: sortBy,
           },
         };
       },

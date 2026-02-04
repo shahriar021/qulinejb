@@ -10,13 +10,13 @@ const GenreSection = () => {
     
     const [selectedGenre,setSelectedGenre]=useState<Genres | null>(null)
     const { data: getAllGenre, isLoading:isGenreLoading, error:genreError } = useGetAllGenreQuery();
-    const { data:getMoviesByGenre,isLoading:isGenreMovies,error:genreMovies}=useGetMoviesByGenreQuery(selectedGenre?.id)
+    const { data:getMoviesByGenre,isLoading:isGenreMovies,error:genreMovies}=useGetMoviesByGenreQuery({genreId:selectedGenre?.id,sortBy:"popularity.desc"})
    
     if (genreError || genreMovies) return <ErrorMessage message={"Something wrong with genre list. Please Try again."} onRetry={()=>window.location.reload()}/>;
 
     return (
       <div>
-        <h1 className="font-bold text-white text-2xl mb-2">All Genre</h1>
+        <h1 className="font-bold text-white text-2xl mb-2 mt-2">All Genre</h1>
         <div className="flex flex-row overflow-x-auto gap-4 pb-5 no-scrollbar">
           {getAllGenre?.genres?.map((movie:Genres) => (
             <div
