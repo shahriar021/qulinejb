@@ -2,27 +2,35 @@
 import { TMDB_IMAGE_BASE_URL } from "@/src/components/lib/constants";
 import { useGetCastListQuery, useGetMovieDetailsQuery } from "@/src/redux/features/movieDetails/movieDetails";
 import { useParams } from "next/navigation";
-import React from "react";
+import React, { useEffect } from "react";
 import { ClockIcon } from "@heroicons/react/24/solid";
 import { StarIcon } from "@heroicons/react/24/solid";
 import { useGetMoviesByGenreQuery } from "@/src/redux/features/genre/moviesByGenreApi";
 import MovieCardSkeleton from "@/src/components/shared/MovieCardSkeleton";
-import { Movie } from "@/src/types/movie";
+import { CastMember, Movie } from "@/src/types/movie";
 import MovieCard from "@/src/components/shared/MovieCard";
+import { saveRecentWatchedmoviess } from "@/src/utils/saveRecentMovies";
+import { Genres } from "@/src/types/genre";
+import ErrorMessage from "@/src/components/shared/ErrorMessage";
 
 const Page = () => {
   const params = useParams();
-  const movieId = params.id;
+  const movieId = Array.isArray(params.id) ? params.id[0] : params.id;
 
-  const { data: getMovieDetails } = useGetMovieDetailsQuery(movieId);
+  const { data: getMovieDetails,error:detailsError } = useGetMovieDetailsQuery(movieId);
   const {data:getCastList}=useGetCastListQuery(movieId)
-  const genresIds = getMovieDetails?.genres?.map(item=>item.id).join(",")
-  const {
-    data: getMoviesByGenre,
-    isLoading: isGenreMovies,
-    error: genreMovies,
-  } = useGetMoviesByGenreQuery({ genreId: genresIds, sortBy: "popularity.desc" });
-  console.log(getMoviesByGenre,"----");
+  const genresIds = getMovieDetails?.genres?.map((item: Genres) => item.id).join(",");
+  const {data: getMoviesByGenre,isLoading: isGenreMovies,error: genreMovies} = useGetMoviesByGenreQuery({ genreId: genresIds, sortBy: "popularity.desc" });
+
+  if (detailsError || genreMovies) {
+    return <ErrorMessage message={"Some thing wrong with Details page. Please wait."} onRetry={() => window.location.reload()} />;
+  }
+
+  useEffect(()=>{
+    if(movieId){
+      saveRecentWatchedmoviess(movieId)
+    }
+  },[movieId])
 
   return (
     <div>
@@ -52,13 +60,14 @@ const Page = () => {
             </p>
             <p className="flex flex-row gap-2">
               Genre:
-              {getMovieDetails?.genres?.map((item) => (
+              {getMovieDetails?.genres?.map((item:Genres) => (
                 <span key={item.id}>{item.name}</span>
               ))}
             </p>
             <p className="underline">Cast</p>
-            <div className="flex flex-row flex-wrap gap-0.5">{getCastList?.cast?.map((item) => item.name).join(",")}</div>
+            <div className="flex flex-row flex-wrap gap-0.5">{getCastList?.cast?.map((item:CastMember) => item.name).join(",")}</div>
           </div>
+
         </div>
       </div>
       <div className="p-5">
