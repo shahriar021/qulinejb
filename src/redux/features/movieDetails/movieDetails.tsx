@@ -1,6 +1,6 @@
 import { baseApi } from "../../createdApi/baseApi";
 
-const movieDetails = baseApi.injectEndpoints({
+export const movieDetails = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getMovieDetails: builder.query({
       query: (movieId) => {
