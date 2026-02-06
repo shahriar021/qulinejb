@@ -1,3 +1,8 @@
+export type MovieCardActions = {
+  watchLater?: boolean;
+  remove?: boolean;
+};
+
 export interface Movie {
   adult: boolean;
   backdrop_path: string | null;
@@ -17,6 +22,7 @@ export interface Movie {
 
 export interface MovieCardProp {
   movie: Movie;
+  actions?: MovieCardActions;
 }
 
 export interface MovieResponse {
@@ -28,18 +34,17 @@ export interface MovieResponse {
 
 export interface CastMember {
   adult: boolean;
-  gender: number; 
+  gender: number;
   id: number;
-  known_for_department: string; 
+  known_for_department: string;
   name: string;
   original_name?: string;
-  popularity?: number; 
+  popularity?: number;
   profile_path?: string | null;
-  cast_id?: number; 
-  character?: string; 
+  cast_id?: number;
+  character?: string;
   credit_id?: string;
-  order?: number; 
-  department?: string; 
-  job?: string; 
+  order?: number;
+  department?: string;
+  job?: string;
 }
-
