@@ -70,7 +70,7 @@ const Page = () => {
       </section>
 
       <div className="p-5">
-        <h1 className="font-bold text-white text-2xl mb-2">Your Watch Later</h1>
+        <h1 className="font-bold text-foreground text-2xl mb-2">Your Watch Later</h1>
         <div className="flex flex-row overflow-x-auto gap-4 pb-5 no-scrollbar mt-3">
           {loading ? (
             Array.from({ length: 5 }).map((_, i) => <MovieCardSkeleton key={i} />)
@@ -79,7 +79,7 @@ const Page = () => {
               <h3 className=" ">😩 Oops! Your watch later list is empty… go explore some movies and fill it up!</h3>
             </div>
           ) : (
-            movies?.map((movie: Movie) => <MovieCard movie={movie} key={movie.id} actions={{ remove: true }} onRemove={handleRemove}/>)
+            movies?.map((movie: Movie) => <MovieCard movie={movie} key={movie.id} actions={{ remove: true }} onRemove={handleRemove} />)
           )}
         </div>
       </div>

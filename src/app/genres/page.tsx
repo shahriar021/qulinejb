@@ -38,8 +38,8 @@ export default function GenresPage() {
 
       <div className="p-5">
         <div className="flex items-center justify-between mb-2 ">
-          <h1 className="font-bold text-white text-2xl mb-2 mt-2">Choose Your Genre</h1>
-          <div className="border border-white rounded-2xl p-2 hover:cursor-pointer" onClick={() => setShowSortOption(!showSortOption)}>
+          <h1 className="font-bold text-foreground text-2xl mb-2 mt-2">Choose Your Genre</h1>
+          <div className="border border-foreground rounded-2xl p-2 hover:cursor-pointer" onClick={() => setShowSortOption(!showSortOption)}>
             <p>sort by</p>
           </div>
         </div>
@@ -56,9 +56,9 @@ export default function GenresPage() {
             </div>
           ))}
           {showSortOption && (
-            <div className="absolute bg-white right-0 p-2 rounded-2xl">
+            <div className="absolute bg-background right-0 p-2 rounded-2xl">
               {Object.entries(sortData).map(([key, value]) => (
-                <p key={key} className="text-black font-medium m-2 hover:cursor-pointer" onClick={() => handleSort(value)}>
+                <p key={key} className="text-foreground font-medium m-2 hover:cursor-pointer" onClick={() => handleSort(value)}>
                   {key}
                 </p>
               ))}
@@ -66,7 +66,7 @@ export default function GenresPage() {
           )}
         </div>
 
-        <h1 className="font-bold text-white text-2xl mt-2 mb-2">{selectedGenre?.name}</h1>
+        <h1 className="font-bold text-foreground text-2xl mt-2 mb-2">{selectedGenre?.name}</h1>
 
         <div className="flex flex-row overflow-x-auto gap-4 pb-5 no-scrollbar mt-3">
           {isGenreMovies || isGenreLoading

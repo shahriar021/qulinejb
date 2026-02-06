@@ -16,7 +16,7 @@ const TopRatedSection = () => {
 
   return (
     <div>
-      <h1 className="font-bold text-white text-2xl mb-2">Top Rated</h1>
+      <h1 className="font-bold text-foreground text-2xl mb-2">Top Rated</h1>
       <div className="flex flex-row overflow-x-auto gap-4 pb-5 no-scrollbar">
         {isLoading
           ? Array.from({ length: 5 }).map((_, i) => <MovieCardSkeleton key={i} />)

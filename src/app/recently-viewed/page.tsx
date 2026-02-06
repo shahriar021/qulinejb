@@ -59,7 +59,7 @@ const Page = () => {
       </section>
 
       <div className="p-5">
-        <h1 className="font-bold text-white text-2xl mb-2">Recently Viewed</h1>
+        <h1 className="font-bold text-foreground text-2xl mb-2">Recently Viewed</h1>
         <div className="flex flex-row overflow-x-auto gap-4 pb-5 no-scrollbar mt-3">
           {loading ? (
             Array.from({ length: 5 }).map((_, i) => <MovieCardSkeleton key={i} />)

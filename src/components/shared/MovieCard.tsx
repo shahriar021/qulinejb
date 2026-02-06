@@ -13,7 +13,7 @@ const MovieCard: React.FC<MovieCardProp> = ({ movie, actions ,onWatchLater ,onRe
 
 
   return (
-    <div className="relative shrink-0 w-48 sm:w-56 md:w-64 hover:cursor-pointer">
+    <div className="relative shrink-0 w-48 sm:w-56 md:w-64 hover:cursor-pointer rounded-md overflow-hidden">
       <Link href={`/movies/${movie.id}`} className="block">
         <img
           src={`${TMDB_IMAGE_BASE_URL}${movie.poster_path}`}
