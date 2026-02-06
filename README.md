@@ -1,36 +1,165 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# QulineJB 🎬
 
-## Getting Started
+> A responsive movie web application to browse, search, and save your favorite movies.
 
-First, run the development server:
+![Project Banner](link-to-your-banner-image)
+
+---
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Project Structure](#project-structure)
+- [Key Components](#key-components)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Responsive Design](#responsive-design)
+- [Future Improvements](#future-improvements)
+- [License](#license)
+
+---
+
+## Overview
+
+**QulineJB** is a web application built with **Next.js**, **TypeScript**, and **Tailwind CSS**. It allows users to:
+
+- Browse **top-rated movies**
+- Filter movies by **genres**
+- View detailed movie information
+- Track **recently viewed** movies
+- Save movies to **watch later**
+- Search movies by **title**
+
+All movie data is sourced from the **TMDB API**.
+
+---
+
+## Features
+
+1. **Top Rated Movies**
+   - Fetches the most popular movies from TMDB.
+   - Movies are displayed in a responsive grid.
+
+2. **Genres**
+   - Filter movies by genres such as Action, Comedy, Drama, etc.
+   - Displays relevant movies dynamically.
+
+3. **Movie Details**
+   - Shows synopsis, ratings, release date, and genres for each movie.
+   - Dedicated details page for every movie.
+
+4. **Recently Viewed Movies**
+   - Tracks movies recently viewed by the user.
+   - Quick access to previously explored movies.
+
+5. **Watch Later**
+   - Save movies to a watch-later list.
+   - Data is stored in **localStorage**.
+   - Remove movies dynamically from the list.
+
+6. **Search Functionality**
+   - Search movies by title using TMDB Search API.
+   - Displays results in a responsive grid.
+   - Handles empty queries gracefully by showing top-rated movies.
+
+---
+
+## Tech Stack
+
+| Technology       | Purpose                                                |
+|-----------------|--------------------------------------------------------|
+| Next.js          | Frontend framework with server-side rendering         |
+| TypeScript       | Type-safe JavaScript for robust and maintainable code |
+| Tailwind CSS     | Utility-first CSS framework for modern UI             |
+| TMDB API         | Source of movie data including ratings and genres    |
+| LocalStorage     | Store watch-later and recently viewed movies locally |
+
+---
+
+## Project Structure
+
+src/
+├─ components/
+│ ├─ shared/
+│ │ └─ MovieCard.tsx
+│ └─ ...
+├─ pages/
+│ ├─ index.tsx
+│ ├─ watch-later.tsx
+│ └─ ...
+├─ redux/
+│ ├─ features/
+│ │ ├─ topRated/
+│ │ │ └─ topRatedMovieApi.ts
+│ │ └─ ...
+│ └─ store.ts
+└─ styles/
+└─ globals.css
+
+
+---
+
+## Key Components
+
+### MovieCard.tsx
+- Displays movie poster, title, and interactive buttons (watch later, remove).
+- Handles click events for navigating to movie details or adding/removing watch-later items.
+
+### useWatchLater Hook
+- Custom hook to manage watch-later functionality.
+- Handles storing and retrieving data from **localStorage**.
+- Provides toggle functionality for adding/removing movies.
+
+### Search Input
+- Controlled input component that dynamically updates the movie grid.
+- Calls TMDB Search API and updates results in real-time.
+
+---
+
+## Installation
+
+1. Clone the repository:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+    git clone https://github.com/yourusername/qulinejb.git
+    cd qulinejb
+    Install dependencies:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+    npm install
+    # or
+    yarn install
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+    Add your TMDB API key:
 
-## Learn More
+    Create a .env.local file:
 
-To learn more about Next.js, take a look at the following resources:
+    NEXT_PUBLIC_TMDB_API_KEY=your_api_key_here
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+    Start the development server:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+    npm run dev
+    # or
+    yarn dev
 
-## Deploy on Vercel
+    Open http://localhost:3000 in your browser.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+ ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+ Responsive Design
+
+Grid Layout: Tailwind classes ensure responsiveness:
+
+Mobile: grid-cols-1
+
+Small screens: grid-cols-2
+
+Medium screens: grid-cols-3
+
+Large screens: grid-cols-4
+
+MovieCard scales with hover effect for better UX.
+
+Watch-later and recently viewed sections adapt to screen size.
