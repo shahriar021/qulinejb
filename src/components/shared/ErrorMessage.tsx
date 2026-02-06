@@ -1,6 +1,7 @@
+import { ErrorMessageProps } from "@/src/types/general";
 import React from "react";
 
-const ErrorMessage = ({ message, onRetry }) => {
+const ErrorMessage = ({ message, onRetry }:ErrorMessageProps) => {
   return (
     <div className="flex flex-col items-center justify-center text-center text-red-500 bg-red-100 rounded-lg p-4">
       <p className="font-semibold">{message || "Something went wrong. Please try again."}</p>
