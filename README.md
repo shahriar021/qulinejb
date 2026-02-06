@@ -79,7 +79,7 @@ All movie data is sourced from the **TMDB API**.
 ---
 
 ## Project Structure
-
+```
 src/
 ├─ components/
 │ ├─ shared/
@@ -98,7 +98,7 @@ src/
 └─ styles/
 └─ globals.css
 
-
+```
 ---
 
 ## Key Components
