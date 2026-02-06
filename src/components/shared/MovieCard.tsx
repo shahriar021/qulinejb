@@ -10,7 +10,6 @@ const MovieCard: React.FC<MovieCardProp> = ({ movie, actions ,onWatchLater ,onRe
   const [saveToWatch, setSaveToWatch] = useState(false);
   const {watchLaterIds,toggleWatchLater}=useWatchLater()
   const isInWatchLater = watchLaterIds.includes(movie.id.toString());
-  console.log(isInWatchLater);
 
 
   return (
