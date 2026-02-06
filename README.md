@@ -2,7 +2,7 @@
 
 > A responsive movie web application to browse, search, and save your favorite movies.
 
-![Project Banner](link-to-your-banner-image)
+![Project Banner](images/qdanner.png)
 
 ---
 
