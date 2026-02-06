@@ -31,6 +31,7 @@
 - Track **recently viewed** movies
 - Save movies to **watch later**
 - Search movies by **title**
+- Light mode also 
 
 All movie data is sourced from the **TMDB API**.
 
@@ -47,7 +48,7 @@ All movie data is sourced from the **TMDB API**.
    - Displays relevant movies dynamically.
 
 3. **Movie Details**
-   - Shows synopsis, ratings, release date, and genres for each movie.
+   - Shows details, ratings, release date, and genres for each movie.
    - Dedicated details page for every movie.
 
 4. **Recently Viewed Movies**
@@ -75,28 +76,48 @@ All movie data is sourced from the **TMDB API**.
 | Tailwind CSS     | Utility-first CSS framework for modern UI             |
 | TMDB API         | Source of movie data including ratings and genres    |
 | LocalStorage     | Store watch-later and recently viewed movies locally |
+| Jest             | For unit testing(movie card and error message)
 
 ---
 
 ## Project Structure
 ```
 src/
+├─ app/                         # Feature-based routing (Next.js 13+ convention)
+│  ├─ genres/
+│  │  └─ page.tsx
+│  ├─ movies/
+│  │  └─ page.tsx
+│  ├─ recently-movies/
+│  │  └─ page.tsx
+│  ├─ watch-later/
+│  │  └─ page.tsx
+│  └─ home/
+│     └─ page.tsx               # Could be the dashboard or landing page
+│
+├─ context/
+│  └─ WatchLaterContext.tsx
+│
 ├─ components/
-│ ├─ shared/
-│ │ └─ MovieCard.tsx
-│ └─ ...
-├─ pages/
-│ ├─ index.tsx
-│ ├─ watch-later.tsx
-│ └─ ...
-├─ redux/
-│ ├─ features/
-│ │ ├─ topRated/
-│ │ │ └─ topRatedMovieApi.ts
-│ │ └─ ...
-│ └─ store.ts
-└─ styles/
-└─ globals.css
+│  ├─ shared/                   # Reusable components (MovieCard, Button, etc.)
+│  │  └─ MovieCard.tsx
+│  ├─ home/                      # Components only used in home page
+│  ├─ layout/                    # Navbar, Footer, Layout wrapper
+│  └─ lib/                       # Maybe helper UI components like Skeleton, Loader
+│
+├─ hooks/                        # Custom hooks (useWatchLater, etc.)
+│
+├─ redux/                        # Redux setup
+│  ├─ store.ts
+│  ├─ features/                  # Feature slices (topRatedSlice, etc.)
+│  └─ createdApi/                 # RTK Query APIs
+│
+├─ utils/                        # Utility functions (saveRecentMovies, etc.)
+│  |-saveRecentMovies.ts
+├─ types/                        # TypeScript types
+│  |-movies.ts
+
+
 
 ```
 ---
@@ -163,3 +184,25 @@ Large screens: grid-cols-4
 MovieCard scales with hover effect for better UX.
 
 Watch-later and recently viewed sections adapt to screen size.
+
+ ----- 
+
+Unit Testing with Jest
+
+In this project, Jest along with React Testing Library is used to write unit tests for React components.
+
+So far, tests have been implemented for:
+
+MovieCard Component
+
+Checks that the movie title renders correctly.
+
+Ensures the “Watch Later” button behaves properly when wrapped in WatchLaterProvider context.
+
+ErrorMessage Component
+
+Verifies that the error message text is displayed correctly.
+
+Confirms that the component renders without crashing.
+
+These tests help ensure that core UI components behave as expected and make future refactoring safer.
