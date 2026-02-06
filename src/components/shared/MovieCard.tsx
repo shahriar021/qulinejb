@@ -4,18 +4,14 @@ import { MovieCardProp } from "@/src/types/movie";
 import Link from "next/link";
 import { ClockIcon,XMarkIcon } from "@heroicons/react/24/solid";
 import { toggleWatchLater } from "@/src/utils/toggleWatchLater";
+import { useWatchLater } from "@/src/hooks/useWatchLater";
 
-const MovieCard: React.FC<MovieCardProp> = ({ movie, actions = { watchLater: true } }) => {
+const MovieCard: React.FC<MovieCardProp> = ({ movie, actions ,onWatchLater ,onRemove}) => {
   const [saveToWatch, setSaveToWatch] = useState(false);
-  const [watchLaterIds, setWatchLaterIds] = useState<string[]>(() => {
-    const stored = localStorage.getItem("watch_later");
-    return stored ? JSON.parse(stored) : [];
-  });
+  const {watchLaterIds,toggleWatchLater}=useWatchLater()
+  const isInWatchLater = watchLaterIds.includes(movie.id.toString());
+  console.log(isInWatchLater);
 
-  const handleWatchLater = () => {
-    setWatchLaterIds((prev) => toggleWatchLater(movie.id, prev,actions.remove));
-    setSaveToWatch(prev=>!prev); 
-  };
 
   return (
     <div className="relative shrink-0 w-48 sm:w-56 md:w-64 hover:cursor-pointer">
@@ -30,23 +26,25 @@ const MovieCard: React.FC<MovieCardProp> = ({ movie, actions = { watchLater: tru
 
       {/*this section is for watch later */}
       <div className="absolute top-0 right-0 hover:cursor-pointer z-50 ">
-        {actions.watchLater && (
+        {actions?.watchLater && (
           <button
             onClick={(e) => {
               e.stopPropagation();
-              handleWatchLater();
+              onWatchLater && onWatchLater(movie.id);
+              setSaveToWatch(true);
             }}
             className="bg-black/70 p-3 rounded-full"
           >
-            {!saveToWatch ? "⏰ watch later" : <ClockIcon className="h-6 w-6 text-blue-500" />}
+            {isInWatchLater ? <ClockIcon className="h-6 w-6 text-blue-500" /> : "⏰ watch later"}
           </button>
         )}
 
-        {actions.remove && (
+        {actions?.remove && (
           <button
             onClick={(e) => {
               e.stopPropagation();
-              handleWatchLater();
+              onRemove && onRemove(movie.id);
+              setSaveToWatch(false);
             }}
             className="bg-black/70 p-3 rounded-full"
           >

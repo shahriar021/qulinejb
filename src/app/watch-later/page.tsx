@@ -4,6 +4,7 @@ import MovieCardSkeleton from "@/src/components/shared/MovieCardSkeleton";
 import { movieDetails } from "@/src/redux/features/movieDetails/movieDetails";
 import { useAppDispatch } from "@/src/redux/hooks";
 import { Movie } from "@/src/types/movie";
+import { toggleWatchLater } from "@/src/utils/toggleWatchLater";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
@@ -45,6 +46,10 @@ const Page = () => {
     fetchMovies();
   }, [watchLaterIds, dispatch]);
 
+  const handleRemove = (id: number) => {
+    setWatchLaterIds((prev) => toggleWatchLater(id, prev, true));
+  };
+
   return (
     <div>
       <section className="relative w-full h-64 bg-linear-to-r from-purple-900  to-black overflow-hidden flex items-center">
@@ -74,7 +79,7 @@ const Page = () => {
               <h3 className=" ">😩 Oops! Your watch later list is empty… go explore some movies and fill it up!</h3>
             </div>
           ) : (
-            movies?.map((movie: Movie) => <MovieCard movie={movie} key={movie.id} actions={{ remove: true }} />)
+            movies?.map((movie: Movie) => <MovieCard movie={movie} key={movie.id} actions={{ remove: true }} onRemove={handleRemove}/>)
           )}
         </div>
       </div>

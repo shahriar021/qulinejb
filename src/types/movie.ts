@@ -23,6 +23,8 @@ export interface Movie {
 export interface MovieCardProp {
   movie: Movie;
   actions?: MovieCardActions;
+  onWatchLater?: (id: number) => void;
+  onRemove?: (id: number) => void;
 }
 
 export interface MovieResponse {
