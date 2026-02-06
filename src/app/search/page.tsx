@@ -2,6 +2,7 @@
 import MovieCard from "@/src/components/shared/MovieCard";
 import { useGetSearchItemQuery } from "@/src/redux/features/search/searchApi";
 import { useGetTopRatedQuery } from "@/src/redux/features/topRated/topRatedMovieApi";
+import { Movie } from "@/src/types/movie";
 import React, { useState } from "react";
 
 const Page = () => {
@@ -23,7 +24,7 @@ const Page = () => {
 
       <div className="flex justify-center">
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 p-12">
-          {(getSearchMovies?.results.length > 0 ? getSearchMovies?.results : getTopRatedMovies?.results)?.map((movie) => (
+          {(getSearchMovies?.results.length > 0 ? getSearchMovies?.results : getTopRatedMovies?.results)?.map((movie:Movie) => (
             <MovieCard key={movie.id} movie={movie} actions={{ watchLater: true }} />
           ))}
         </div>

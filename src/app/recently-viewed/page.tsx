@@ -1,4 +1,5 @@
 "use client";
+import ErrorMessage from "@/src/components/shared/ErrorMessage";
 import MovieCard from "@/src/components/shared/MovieCard";
 import MovieCardSkeleton from "@/src/components/shared/MovieCardSkeleton";
 import { movieDetails } from "@/src/redux/features/movieDetails/movieDetails";
@@ -11,6 +12,7 @@ const Page = () => {
   const dispatch = useAppDispatch();
   const [movies, setMovies] = useState<Movie[] | null>([]);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const getRecentlyViewedMovies = () => {
     const stored = localStorage.getItem("recently_wathced_movies");
@@ -30,7 +32,7 @@ const Page = () => {
 
         setMovies(fetchedMovies);
       } catch (err) {
-        console.error("Error fetching recently viewed movies:", err);
+        setError("something went wrong in recently viewed page. Please try again later")
       } finally {
         setLoading(false);
       }
@@ -38,6 +40,10 @@ const Page = () => {
 
     fetchMovies();
   }, [dispatch]);
+
+  if(error){
+    return <ErrorMessage message={error} onRetry={()=>window.location.reload()}/>
+  }
 
   return (
     <div>

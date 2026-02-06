@@ -1,16 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import { TMDB_IMAGE_BASE_URL } from "../lib/constants";
 import { MovieCardProp } from "@/src/types/movie";
 import Link from "next/link";
 import { ClockIcon,XMarkIcon } from "@heroicons/react/24/solid";
-import { toggleWatchLater } from "@/src/utils/toggleWatchLater";
 import {  useWatchLaterContext } from "@/src/context/WatchLaterContext";
 
-const MovieCard: React.FC<MovieCardProp> = ({ movie, actions, onWatchLater, onRemove, isInWatchLater }) => {
-  // const [saveToWatch, setSaveToWatch] = useState(false);
-  // const {watchLaterIds,toggleWatchLater}=useWatchLater()
-  // const isInWatchLater = watchLaterIds.includes(movie.id.toString());
-  const { watchLaterIds, toggleWatchLater } = useWatchLaterContext();
+const MovieCard: React.FC<MovieCardProp> = ({ movie, actions, onRemove, isInWatchLater }) => {
+
+  const {  toggleWatchLater } = useWatchLaterContext();
 
   return (
     <div className="relative shrink-0 w-48 sm:w-56 md:w-64 hover:cursor-pointer rounded-md overflow-hidden">

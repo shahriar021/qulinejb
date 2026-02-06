@@ -1,18 +1,19 @@
 "use client";
+import ErrorMessage from "@/src/components/shared/ErrorMessage";
 import MovieCard from "@/src/components/shared/MovieCard";
 import MovieCardSkeleton from "@/src/components/shared/MovieCardSkeleton";
 import { movieDetails } from "@/src/redux/features/movieDetails/movieDetails";
 import { useAppDispatch } from "@/src/redux/hooks";
 import { Movie } from "@/src/types/movie";
 import { toggleWatchLater } from "@/src/utils/toggleWatchLater";
-import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 const Page = () => {
   const dispatch = useAppDispatch();
-  const [watchLaterIds, setWatchLaterIds] = useState<string[] | null>(null);
+  const [watchLaterIds, setWatchLaterIds] = useState<string[]>([]);
   const [movies, setMovies] = useState<Movie[] | null>([]);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   useEffect(()=>{
     const stored = localStorage.getItem("watch_later");
@@ -40,7 +41,7 @@ const Page = () => {
 
         setMovies(fetchedMovies);
       } catch (err) {
-        console.error("Error fetching recently viewed movies:", err);
+         setError("something went wrong in watch later page. Please try again later");
       } finally {
         setLoading(false);
       }
@@ -52,6 +53,10 @@ const Page = () => {
   const handleRemove = (id: number) => {
     setWatchLaterIds((prev) => toggleWatchLater(id, prev, true));
   };
+
+  if (error) {
+    return <ErrorMessage message={error} onRetry={() => window.location.reload()} />;
+  }
 
   return (
     <div>

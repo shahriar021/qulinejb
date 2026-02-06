@@ -1,5 +1,5 @@
 import { useGetTopRatedQuery } from "@/src/redux/features/topRated/topRatedMovieApi";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import MovieCard from "../shared/MovieCard";
 import MovieCardSkeleton from "../shared/MovieCardSkeleton";
 import ErrorMessage from "../shared/ErrorMessage";

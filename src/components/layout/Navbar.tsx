@@ -12,7 +12,6 @@ export default function Navbar() {
      setIsLight(mode)
   };
 
-  console.log(isLight);
   return (
     <nav className="bg-background text-foreground p-4 flex items-center justify-between">
       <div className="flex items-center  gap-5">
