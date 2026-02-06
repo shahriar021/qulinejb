@@ -4,13 +4,13 @@ import { MovieCardProp } from "@/src/types/movie";
 import Link from "next/link";
 import { ClockIcon,XMarkIcon } from "@heroicons/react/24/solid";
 import { toggleWatchLater } from "@/src/utils/toggleWatchLater";
-import { useWatchLater } from "@/src/hooks/useWatchLater";
+import {  useWatchLaterContext } from "@/src/context/WatchLaterContext";
 
-const MovieCard: React.FC<MovieCardProp> = ({ movie, actions ,onWatchLater ,onRemove}) => {
-  const [saveToWatch, setSaveToWatch] = useState(false);
-  const {watchLaterIds,toggleWatchLater}=useWatchLater()
-  const isInWatchLater = watchLaterIds.includes(movie.id.toString());
-
+const MovieCard: React.FC<MovieCardProp> = ({ movie, actions, onWatchLater, onRemove, isInWatchLater }) => {
+  // const [saveToWatch, setSaveToWatch] = useState(false);
+  // const {watchLaterIds,toggleWatchLater}=useWatchLater()
+  // const isInWatchLater = watchLaterIds.includes(movie.id.toString());
+  const { watchLaterIds, toggleWatchLater } = useWatchLaterContext();
 
   return (
     <div className="relative shrink-0 w-48 sm:w-56 md:w-64 hover:cursor-pointer rounded-md overflow-hidden">
@@ -29,12 +29,11 @@ const MovieCard: React.FC<MovieCardProp> = ({ movie, actions ,onWatchLater ,onRe
           <button
             onClick={(e) => {
               e.stopPropagation();
-              onWatchLater && onWatchLater(movie.id);
-              setSaveToWatch(true);
+              toggleWatchLater(movie.id);
             }}
             className="bg-black/70 p-3 rounded-full"
           >
-            {isInWatchLater ? <ClockIcon className="h-6 w-6 text-blue-500" /> : "⏰ watch later"}
+            {isInWatchLater ? <ClockIcon className="h-6 w-6 text-white" /> : <p className="text-white">⏰ watch later</p>}
           </button>
         )}
 
@@ -43,7 +42,6 @@ const MovieCard: React.FC<MovieCardProp> = ({ movie, actions ,onWatchLater ,onRe
             onClick={(e) => {
               e.stopPropagation();
               onRemove && onRemove(movie.id);
-              setSaveToWatch(false);
             }}
             className="bg-black/70 p-3 rounded-full"
           >

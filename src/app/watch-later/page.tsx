@@ -24,7 +24,10 @@ const Page = () => {
 
   useEffect(() => {
 
-    if (!watchLaterIds?.length) return;
+    if (!watchLaterIds?.length) {
+      setMovies([]);
+      return;
+    }
 
     const fetchMovies = async () => {
       setLoading(true);
@@ -53,14 +56,12 @@ const Page = () => {
   return (
     <div>
       <section className="relative w-full h-64 bg-linear-to-r from-purple-900  to-black overflow-hidden flex items-center">
-        <div className="flex-1 text-white z-10 p-6">
-          <h2 className="text-3xl font-bold">🎬 Discover Your Next Movie Adventure</h2>
-          <p className="mt-2 text-gray-300 text-sm md:text-base mb-4">
-            Explore trending movies, hidden gems, and create your own watchlist.
+        <div className="flex-1 text-white z-10 p-6 bg-linear-to-r from-purple-600 via-pink-500 to-red-500 rounded-xl shadow-lg m-3">
+          <h2 className="text-3xl font-bold">🎬 Your Watch Later Collection</h2>
+          <p className="mt-2 text-gray-100 text-sm md:text-base mb-4">
+            You’ve saved {movies?.length} {movies?.length === 1 ? "movie" : "movies"} to watch later. Pick a movie and enjoy
+            your next movie night!
           </p>
-          <Link className="mt-4 px-4 py-2 bg-blue-600 rounded hover:bg-blue-500 transition" href={"/"}>
-            Explore Now
-          </Link>
         </div>
 
         <div className="relative flex-[0.4] md:w-64 h-full shrink-0 ml-6 z-10">

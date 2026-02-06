@@ -6,6 +6,7 @@ import { Provider } from "react-redux";
 import { store } from "../redux/store";
 import ReduxProvider from "../redux/ReduxProvider";
 import Footer from "../components/layout/Footer";
+import { WatchLaterProvider } from "../context/WatchLaterContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,9 +32,11 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <ReduxProvider>
-          <Navbar />
-          {children}
-          <Footer/>
+          <WatchLaterProvider>
+            <Navbar />
+            {children}
+            <Footer />
+          </WatchLaterProvider>
         </ReduxProvider>
       </body>
     </html>

@@ -5,6 +5,8 @@ import ErrorMessage from '../shared/ErrorMessage';
 import MovieCardSkeleton from '../shared/MovieCardSkeleton';
 import { Genres } from '@/src/types/genre';
 import { Movie } from '@/src/types/movie';
+import Link from 'next/link';
+import { ArrowRightCircleIcon } from '@heroicons/react/24/solid';
 
 const GenreSection = () => {
     
@@ -37,6 +39,12 @@ const GenreSection = () => {
           {isGenreMovies || isGenreLoading
             ? Array.from({ length: 5 }).map((_, i) => <MovieCardSkeleton key={i} />)
             : getMoviesByGenre?.results?.slice(0, 5)?.map((movie: Movie) => <MovieCard movie={movie} key={movie.id} />)}
+          <div className="flex items-center justify-center shrink-0 w-48 sm:w-56 md:w-64 hover:cursor-pointer rounded-md overflow-hidden border border-amber-200">
+            <Link href={`/genres`} className="block">
+              <ArrowRightCircleIcon className="p-2 text-blue-500"/>
+              <p className="text-white font-bold texl-lg mt-2 text-center z-10 w-full">explore more genres</p>
+            </Link>
+          </div>
         </div>
       </div>
     );

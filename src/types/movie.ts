@@ -25,6 +25,7 @@ export interface MovieCardProp {
   actions?: MovieCardActions;
   onWatchLater?: (id: number) => void;
   onRemove?: (id: number) => void;
+  isInWatchLater?: boolean;
 }
 
 export interface MovieResponse {

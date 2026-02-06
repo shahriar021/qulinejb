@@ -4,11 +4,11 @@ import MovieCard from "../shared/MovieCard";
 import MovieCardSkeleton from "../shared/MovieCardSkeleton";
 import ErrorMessage from "../shared/ErrorMessage";
 import { Movie } from "@/src/types/movie";
-import { useWatchLater } from "@/src/hooks/useWatchLater";
+import { useWatchLaterContext } from "@/src/context/WatchLaterContext";
 
 const TopRatedSection = () => {
-  const { watchLaterIds, toggleWatchLater } = useWatchLater();
   const { data: getTopRatedMovies, isLoading, error } = useGetTopRatedQuery();
+   const { watchLaterIds, toggleWatchLater } = useWatchLaterContext();
 
   if(error){
     return <ErrorMessage message={"Some thing wrong with top rated movies. Please wait."} onRetry={()=>window.location.reload()}/>
@@ -20,14 +20,17 @@ const TopRatedSection = () => {
       <div className="flex flex-row overflow-x-auto gap-4 pb-5 no-scrollbar">
         {isLoading
           ? Array.from({ length: 5 }).map((_, i) => <MovieCardSkeleton key={i} />)
-          : getTopRatedMovies?.results?.map((movie: Movie) => (
+          : getTopRatedMovies?.results?.map((movie: Movie) => {
+            const isInWatchLater = watchLaterIds.includes(movie.id.toString());
+            return (
               <MovieCard
                 movie={movie}
                 key={movie.id}
-                actions={{ watchLater: !watchLaterIds.includes(movie.id.toString()) }}
+                actions={{ watchLater: true }}
+                isInWatchLater={isInWatchLater} // pass it explicitly
                 onWatchLater={() => toggleWatchLater(movie.id)}
               />
-            ))}
+            )})}
       </div>
     </div>
   );
