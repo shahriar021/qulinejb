@@ -5,6 +5,4 @@
 [[plugins]]
   package = "@netlify/plugin-nextjs"
 
-[context.production.environment]
-  NEXT_PUBLIC_TMDB_ACCESS_TOKEN = "your_token_here"
-  NEXT_PUBLIC_TMDB_BASE_URL = "https://api.company.com"
+
