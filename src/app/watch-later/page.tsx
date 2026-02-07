@@ -60,18 +60,20 @@ const Page = () => {
 
   return (
     <div>
-      <section className="relative w-full h-64 bg-linear-to-r from-purple-900  to-black overflow-hidden flex items-center">
-        <div className="flex-1 text-white z-10 p-6 bg-linear-to-r from-purple-600 via-pink-500 to-red-500 rounded-xl shadow-lg m-3">
-          <h2 className="text-3xl font-bold">🎬 Your Watch Later Collection</h2>
-          <p className="mt-2 text-gray-100 text-sm md:text-base mb-4">
-            You’ve saved {movies?.length} {movies?.length === 1 ? "movie" : "movies"} to watch later. Pick a movie and enjoy
-            your next movie night!
+      <section className="relative w-full h-auto md:h-64 bg-linear-to-r from-purple-900 to-black overflow-hidden flex flex-col md:flex-row items-center">
+        
+        <div className="flex-1 text-white z-20 p-6 bg-linear-to-r from-purple-600 via-pink-500 to-red-500 rounded-xl shadow-lg m-4 w-[calc(100%-2rem)] md:w-auto">
+          <h2 className="text-2xl md:text-3xl font-bold">🎬 Your Watch Later Collection</h2>
+          <p className="mt-2 text-gray-100 text-sm md:text-base">
+            You’ve saved <span className="font-bold text-yellow-300">{movies?.length}</span> {movies?.length === 1 ? "movie" : "movies"} to
+            watch later. Pick a movie and enjoy!
           </p>
         </div>
 
-        <div className="relative flex-[0.4] md:w-64 h-full shrink-0 ml-6 z-10">
-          <img src="/images/allMovies.jpg" alt="Movies Illustration" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-linear-to-l from-transparent via-black/40 to-black"></div>
+        
+        <div className="relative w-full md:w-1/3 lg:flex-[0.4] h-40 md:h-full shrink-0 z-10 overflow-hidden">
+          <img src="/images/allMovies.jpg" alt="Movies Illustration" className="w-full h-full object-cover object-center md:object-right" />
+          <div className="absolute inset-0 bg-linear-to-t md:bg-linear-to-l from-transparent via-black/20 to-purple-900 md:to-black"></div>
         </div>
       </section>
 

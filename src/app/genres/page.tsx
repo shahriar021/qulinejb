@@ -4,6 +4,7 @@ import { sortData } from "@/src/components/lib/constants";
 import ErrorMessage from "@/src/components/shared/ErrorMessage";
 import MovieCard from "@/src/components/shared/MovieCard";
 import MovieCardSkeleton from "@/src/components/shared/MovieCardSkeleton";
+import { useWatchLaterContext } from "@/src/context/WatchLaterContext";
 import { useGetAllGenreQuery, useGetMoviesByGenreQuery } from "@/src/redux/features/genre/moviesByGenreApi";
 import { Genres } from "@/src/types/genre";
 import { Movie } from "@/src/types/movie";
@@ -11,9 +12,11 @@ import Image from "next/image";
 import { useState } from "react";
 
 export default function GenresPage() {
+  const { watchLaterIds, toggleWatchLater } = useWatchLaterContext();
   const [showSortOption, setShowSortOption] = useState(false);
   const [sortOption, setSortOption] = useState<{} | null>(null);
   const [selectedGenre, setSelectedGenre] = useState<Genres | null>(null);
+
   const { data: getAllGenre, isLoading: isGenreLoading, error: genreError } = useGetAllGenreQuery();
   const {
     data: getMoviesByGenre,
@@ -37,12 +40,14 @@ export default function GenresPage() {
       </div>
 
       <div className="p-5">
+        
         <div className="flex items-center justify-between mb-2 ">
           <h1 className="font-bold text-foreground text-2xl mb-2 mt-2">Choose Your Genre</h1>
           <div className="border border-foreground rounded-2xl p-2 hover:cursor-pointer" onClick={() => setShowSortOption(!showSortOption)}>
             <p>sort by</p>
           </div>
         </div>
+
         <div className="flex flex-row overflow-x-auto gap-4 pb-5 no-scrollbar relative">
           {getAllGenre?.genres?.map((movie: Genres) => (
             <div
@@ -71,7 +76,17 @@ export default function GenresPage() {
         <div className="flex flex-row overflow-x-auto gap-4 pb-5 no-scrollbar mt-3">
           {isGenreMovies || isGenreLoading
             ? Array.from({ length: 5 }).map((_, i) => <MovieCardSkeleton key={i} />)
-            : getMoviesByGenre?.results?.map((movie: Movie) => <MovieCard movie={movie} key={movie.id} />)}
+            : getMoviesByGenre?.results?.map((movie: Movie) => {
+              const isInWatchLater = watchLaterIds.includes(movie.id.toString())
+              return (
+                <MovieCard
+                  movie={movie}
+                  key={movie.id}
+                  actions={{ watchLater: true }}
+                  isInWatchLater={isInWatchLater}
+                  onWatchLater={() => toggleWatchLater(movie.id)}
+                />
+              )})}
         </div>
       </div>
     </div>

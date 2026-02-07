@@ -7,3 +7,10 @@ export const sortData = {
   vote_average: "vote_average.desc",
   title: "title.asc",
 };
+
+export  const navLinks = [
+  { name: "Home", href: "/" },
+  { name: "Genres", href: "/genres" },
+  { name: "Recently Viewed", href: "/recently-viewed" },
+  { name: "Watch Later", href: "/watch-later" },
+];

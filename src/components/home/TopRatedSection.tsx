@@ -2,17 +2,12 @@ import { useGetTopRatedQuery } from "@/src/redux/features/topRated/topRatedMovie
 import React from "react";
 import MovieCard from "../shared/MovieCard";
 import MovieCardSkeleton from "../shared/MovieCardSkeleton";
-import ErrorMessage from "../shared/ErrorMessage";
 import { Movie } from "@/src/types/movie";
 import { useWatchLaterContext } from "@/src/context/WatchLaterContext";
 
 const TopRatedSection = () => {
-  const { data: getTopRatedMovies, isLoading, error } = useGetTopRatedQuery();
+  const { data: getTopRatedMovies, isLoading } = useGetTopRatedQuery();
    const { watchLaterIds, toggleWatchLater } = useWatchLaterContext();
-
-  if(error){
-    return <ErrorMessage message={"Some thing wrong with top rated movies. Please wait."} onRetry={()=>window.location.reload()}/>
-  }
 
   return (
     <div>
@@ -27,7 +22,7 @@ const TopRatedSection = () => {
                 movie={movie}
                 key={movie.id}
                 actions={{ watchLater: true }}
-                isInWatchLater={isInWatchLater} // pass it explicitly
+                isInWatchLater={isInWatchLater} 
                 onWatchLater={() => toggleWatchLater(movie.id)}
               />
             )})}

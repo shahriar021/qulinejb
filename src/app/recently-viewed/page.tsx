@@ -2,6 +2,7 @@
 import ErrorMessage from "@/src/components/shared/ErrorMessage";
 import MovieCard from "@/src/components/shared/MovieCard";
 import MovieCardSkeleton from "@/src/components/shared/MovieCardSkeleton";
+import { useWatchLaterContext } from "@/src/context/WatchLaterContext";
 import { movieDetails } from "@/src/redux/features/movieDetails/movieDetails";
 import { useAppDispatch } from "@/src/redux/hooks";
 import { Movie } from "@/src/types/movie";
@@ -9,6 +10,7 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 const Page = () => {
+  const { watchLaterIds, toggleWatchLater } = useWatchLaterContext();
   const dispatch = useAppDispatch();
   const [movies, setMovies] = useState<Movie[] | null>([]);
   const [loading, setLoading] = useState(false);
@@ -32,7 +34,7 @@ const Page = () => {
 
         setMovies(fetchedMovies);
       } catch (err) {
-        setError("something went wrong in recently viewed page. Please try again later")
+        setError("something went wrong in recently viewed page. Please try again later");
       } finally {
         setLoading(false);
       }
@@ -41,26 +43,31 @@ const Page = () => {
     fetchMovies();
   }, [dispatch]);
 
-  if(error){
-    return <ErrorMessage message={error} onRetry={()=>window.location.reload()}/>
+  if (error) {
+    return <ErrorMessage message={error} onRetry={() => window.location.reload()} />;
   }
 
   return (
     <div>
-      <section className="relative w-full h-64 bg-linear-to-r from-purple-900  to-black overflow-hidden flex items-center">
-        <div className="flex-1 text-white z-10 p-6">
-          <h2 className="text-3xl font-bold">🎬 Discover Your Next Movie Adventure</h2>
-          <p className="mt-2 text-gray-300 text-sm md:text-base mb-4">
+      <section className="relative w-full h-auto md:h-64 bg-linear-to-r from-purple-900 to-black overflow-hidden flex flex-col md:flex-row items-center">
+        
+        <div className="flex-1 text-white z-20 p-6 md:p-10 w-full">
+          <h2 className="text-2xl md:text-3xl font-bold leading-tight">🎬 Discover Your Next Movie Adventure</h2>
+          <p className="mt-2 text-gray-300 text-sm md:text-base mb-6 max-w-md">
             Explore trending movies, hidden gems, and create your own watchlist.
           </p>
-          <Link className="mt-4 px-4 py-2 bg-blue-600 rounded hover:bg-blue-500 transition" href={"/"}>
-            Explore Now
-          </Link>
+          
+          <div>
+            <Link className="px-6 py-3 bg-blue-600 rounded shadow-lg hover:bg-blue-500 transition-all inline-block font-medium" href={"/"}>
+              Explore Now
+            </Link>
+          </div>
         </div>
 
-        <div className="relative flex-[0.4] md:w-64 h-full shrink-0 ml-6 z-10">
-          <img src="/images/allMovies.jpg" alt="Movies Illustration" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-linear-to-l from-transparent via-black/40 to-black"></div>
+  
+        <div className="relative w-full md:w-1/3 lg:flex-[0.4] h-48 md:h-full shrink-0 z-10 overflow-hidden">
+          <img src="/images/allMovies.jpg" alt="Movies Illustration" className="w-full h-full object-cover object-center md:object-right" />
+          <div className="absolute inset-0 bg-linear-to-t md:bg-linear-to-l from-transparent via-black/20 to-purple-900 md:to-black"></div>
         </div>
       </section>
 
@@ -74,7 +81,18 @@ const Page = () => {
               <h3 className=" ">😩 Oops! Your recently viewed list is empty… go explore some movies and fill it up!</h3>
             </div>
           ) : (
-            movies?.map((movie: Movie) => <MovieCard movie={movie} key={movie.id} />)
+            movies?.map((movie: Movie) => {
+              const isInWatchLater = watchLaterIds.includes(movie.id.toString());
+              return (
+                <MovieCard
+                  movie={movie}
+                  key={movie.id}
+                  actions={{ watchLater: true }}
+                  isInWatchLater={isInWatchLater}
+                  onWatchLater={() => toggleWatchLater(movie.id)}
+                />
+              );
+            })
           )}
         </div>
       </div>

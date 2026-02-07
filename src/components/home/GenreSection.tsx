@@ -1,53 +1,70 @@
-import { useGetAllGenreQuery, useGetMoviesByGenreQuery } from '@/src/redux/features/genre/moviesByGenreApi';
-import React, { useState } from 'react';
-import MovieCard from '../shared/MovieCard';
-import ErrorMessage from '../shared/ErrorMessage';
-import MovieCardSkeleton from '../shared/MovieCardSkeleton';
-import { Genres } from '@/src/types/genre';
-import { Movie } from '@/src/types/movie';
-import Link from 'next/link';
-import { ArrowRightCircleIcon } from '@heroicons/react/24/solid';
+import { useGetAllGenreQuery, useGetMoviesByGenreQuery } from "@/src/redux/features/genre/moviesByGenreApi";
+import React, { useState } from "react";
+import MovieCard from "../shared/MovieCard";
+import ErrorMessage from "../shared/ErrorMessage";
+import MovieCardSkeleton from "../shared/MovieCardSkeleton";
+import { Genres } from "@/src/types/genre";
+import { Movie } from "@/src/types/movie";
+import Link from "next/link";
+import { ArrowRightCircleIcon } from "@heroicons/react/24/solid";
+import { useWatchLaterContext } from "@/src/context/WatchLaterContext";
 
 const GenreSection = () => {
-    
-    const [selectedGenre,setSelectedGenre]=useState<Genres | null>(null)
-    const { data: getAllGenre, isLoading:isGenreLoading, error:genreError } = useGetAllGenreQuery();
-    const { data:getMoviesByGenre,isLoading:isGenreMovies,error:genreMovies}=useGetMoviesByGenreQuery({genreId:selectedGenre?.id,sortBy:"popularity.desc"})
-   
-    if (genreError || genreMovies) return <ErrorMessage message={"Something wrong with genre list. Please Try again."} onRetry={()=>window.location.reload()}/>;
+  const { watchLaterIds, toggleWatchLater } = useWatchLaterContext();
+  const [selectedGenre, setSelectedGenre] = useState<Genres | null>(null);
+  const { data: getAllGenre, isLoading: isGenreLoading, error: genreError } = useGetAllGenreQuery();
+  const {
+    data: getMoviesByGenre,
+    isLoading: isGenreMovies,
+    error: genreMovies,
+  } = useGetMoviesByGenreQuery({ genreId: selectedGenre?.id, sortBy: "popularity.desc" });
 
-    return (
-      <div>
-        <h1 className="font-bold text-foreground text-2xl mb-2 mt-2">All Genre</h1>
-        <div className="flex flex-row overflow-x-auto gap-4 pb-5 no-scrollbar">
-          {getAllGenre?.genres?.map((movie: Genres) => (
-            <div
-              className="shrink-0 flex  w-80 h-50 bg-blue-300 items-center justify-center rounded-3xl bg-linear-to-br from-blue-600 via-purple-600 to-pink-500"
-              key={movie.id}
-              onClick={() => setSelectedGenre(movie)}
-            >
-              <p key={movie.id} className="text-white font-bold text-xl mt-2 mb-2">
-                {movie.name}
-              </p>
-            </div>
-          ))}
-        </div>
+  if (genreError || genreMovies)
+    return <ErrorMessage message={"Something wrong with genre list. Please Try again."} onRetry={() => window.location.reload()} />;
 
-        <h1 className="font-bold text-foreground text-2xl mt-2 mb-2">{selectedGenre?.name}</h1>
-
-        <div className="flex flex-row overflow-x-auto gap-4 pb-5 no-scrollbar mt-3">
-          {isGenreMovies || isGenreLoading
-            ? Array.from({ length: 5 }).map((_, i) => <MovieCardSkeleton key={i} />)
-            : getMoviesByGenre?.results?.slice(0, 5)?.map((movie: Movie) => <MovieCard movie={movie} key={movie.id} />)}
-          <div className="flex items-center justify-center shrink-0 w-48 sm:w-56 md:w-64 hover:cursor-pointer rounded-md overflow-hidden border border-amber-200">
-            <Link href={`/genres`} className="block">
-              <ArrowRightCircleIcon className="p-2 text-blue-500"/>
-              <p className="text-white font-bold texl-lg mt-2 text-center z-10 w-full">explore more genres</p>
-            </Link>
+  return (
+    <div>
+      <h1 className="font-bold text-foreground text-2xl mb-2 mt-2">All Genre</h1>
+      <div className="flex flex-row overflow-x-auto gap-4 pb-5 no-scrollbar">
+        {getAllGenre?.genres?.map((movie: Genres) => (
+          <div
+            className="shrink-0 flex  w-80 h-50 bg-blue-300 items-center justify-center rounded-3xl bg-linear-to-br from-blue-600 via-purple-600 to-pink-500"
+            key={movie.id}
+            onClick={() => setSelectedGenre(movie)}
+          >
+            <p key={movie.id} className="text-white font-bold text-xl mt-2 mb-2">
+              {movie.name}
+            </p>
           </div>
+        ))}
+      </div>
+
+      <h1 className="font-bold text-foreground text-2xl mt-2 mb-2">{selectedGenre?.name}</h1>
+
+      <div className="flex flex-row overflow-x-auto gap-4 pb-5 no-scrollbar mt-3">
+        {isGenreMovies || isGenreLoading
+          ? Array.from({ length: 5 }).map((_, i) => <MovieCardSkeleton key={i} />)
+          : getMoviesByGenre?.results?.slice(0, 5)?.map((movie: Movie) => {
+              const isInWatchLater = watchLaterIds.includes(movie.id.toString());
+              return (
+                <MovieCard
+                  movie={movie}
+                  key={movie.id}
+                  actions={{ watchLater: true }}
+                  isInWatchLater={isInWatchLater}
+                  onWatchLater={() => toggleWatchLater(movie.id)}
+                />
+              );
+            })}
+        <div className="flex items-center justify-center shrink-0 w-48 sm:w-56 md:w-64 hover:cursor-pointer rounded-md overflow-hidden border border-amber-200">
+          <Link href={`/genres`} className="block">
+            <ArrowRightCircleIcon className="p-2 text-blue-500" />
+            <p className="text-white font-bold texl-lg mt-2 text-center z-10 w-full">explore more genres</p>
+          </Link>
         </div>
       </div>
-    );
-}
+    </div>
+  );
+};
 
 export default GenreSection;
