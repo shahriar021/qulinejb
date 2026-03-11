@@ -7,7 +7,7 @@ import { ClockIcon } from "@heroicons/react/24/solid";
 import { StarIcon } from "@heroicons/react/24/solid";
 import { useGetMoviesByGenreQuery } from "@/src/redux/features/genre/moviesByGenreApi";
 import MovieCardSkeleton from "@/src/components/shared/MovieCardSkeleton";
-import { CastMember, Movie } from "@/src/types/movie";
+import {  CastMember, Movie } from "@/src/types/movie";
 import MovieCard from "@/src/components/shared/MovieCard";
 import { saveRecentWatchedmoviess } from "@/src/utils/saveRecentMovies";
 import { Genres } from "@/src/types/genre";
@@ -34,7 +34,6 @@ const Page = () => {
 
   return (
     <div>
-      
       <div className="block lg:hidden w-full">
         <div className="relative h-62.5 w-full">
           <img src={`${TMDB_IMAGE_BASE_URL}${getMovieDetails?.backdrop_path}`} className="w-full h-full object-cover" alt="backdrop" />
@@ -57,14 +56,13 @@ const Page = () => {
               <p className="text-sm">
                 {getCastList?.cast
                   ?.slice(0, 15)
-                  .map((item: any) => item.name)
+                  .map((item: CastMember) => item.name)
                   .join(", ")}
               </p>
             </div>
           </div>
         </div>
       </div>
-
 
       <div className="hidden lg:block relative w-full h-125">
         <img src={`${TMDB_IMAGE_BASE_URL}${getMovieDetails?.backdrop_path}`} alt="genre" className="w-full h-full object-cover" />
@@ -103,13 +101,12 @@ const Page = () => {
             <div className="flex flex-row flex-wrap gap-1 text-sm text-gray-300">
               {getCastList?.cast
                 ?.slice(0, 25)
-                .map((item: any) => item.name)
+                .map((item: CastMember) => item.name)
                 .join(", ")}
             </div>
           </div>
         </div>
       </div>
-
 
       <div className="p-5">
         <p className="text-foreground font-bold text-2xl">Similar picks</p>

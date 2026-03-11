@@ -33,7 +33,7 @@ const Page = () => {
         const fetchedMovies = results.map((res) => res.data).filter((m) => m !== undefined);
 
         setMovies(fetchedMovies);
-      } catch (err) {
+      } catch  {
         setError("something went wrong in recently viewed page. Please try again later");
       } finally {
         setLoading(false);
