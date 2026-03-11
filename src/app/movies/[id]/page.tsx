@@ -22,15 +22,15 @@ const Page = () => {
   const genresIds = getMovieDetails?.genres?.map((item: Genres) => item.id).join(",");
   const {data: getMoviesByGenre,isLoading: isGenreMovies,error: genreMovies} = useGetMoviesByGenreQuery({ genreId: genresIds, sortBy: "popularity.desc" });
 
-  if (detailsError || genreMovies) {
-    return <ErrorMessage message={"Some thing wrong with Details page. Please wait."} onRetry={() => window.location.reload()} />;
-  }
-
   useEffect(()=>{
     if(movieId){
       saveRecentWatchedmoviess(movieId)
     }
   },[movieId])
+
+  if (detailsError || genreMovies) {
+    return <ErrorMessage message={"Some thing wrong with Details page. Please wait."} onRetry={() => window.location.reload()} />;
+  }
 
   return (
     <div>
