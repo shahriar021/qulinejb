@@ -30,7 +30,11 @@ const MovieCard: React.FC<MovieCardProp> = ({ movie, actions, onRemove, isInWatc
             }}
             className="bg-black/70 p-3 rounded-full"
           >
-            {isInWatchLater ? <ClockIcon className="h-6 w-6 text-white" /> : <span className="text-white">⏰ watch later</span>}
+            {isInWatchLater ? (
+            <ClockIcon className="h-6 w-6 text-white" /> 
+            ):(
+             <span className="text-white">⏰ watch later</span>
+             )}
           </button>
         )}
 
