@@ -6,6 +6,7 @@ import GenreSection from "./GenreSection";
 import { useGetTopRatedQuery } from "@/src/redux/features/topRated/topRatedMovieApi";
 import ErrorMessage from "../shared/ErrorMessage";
 import { useGetAllGenreQuery } from "@/src/redux/features/genre/moviesByGenreApi";
+import MoodRecommender from "../mood/MoodRecommender";
 
 const HomeSection = () => {
    const {error:topRatedError } = useGetTopRatedQuery();
@@ -17,6 +18,7 @@ const HomeSection = () => {
 
   return (
     <div className="p-5">
+      <MoodRecommender />
       <TopRatedSection />
       <GenreSection />
     </div>
