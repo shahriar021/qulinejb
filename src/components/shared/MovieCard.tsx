@@ -42,7 +42,7 @@ const MovieCard: React.FC<MovieCardProp> = ({ movie, actions, onRemove, isInWatc
           <button
             onClick={(e) => {
               e.stopPropagation();
-              onRemove && onRemove(movie.id);
+              if (onRemove) onRemove(movie.id);
             }}
             className="bg-black/70 p-3 rounded-full"
           >
