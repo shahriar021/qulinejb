@@ -12,6 +12,7 @@ const WatchLaterContext = createContext<WatchLaterContextType | undefined>(undef
 
 export const WatchLaterProvider = ({ children }: { children: ReactNode }) => {
   const [watchLaterIds, setWatchLaterIds] = useState<string[]>(() => {
+    if (typeof window === "undefined") return [];
     const stored = localStorage.getItem("watch_later");
     return stored ? JSON.parse(stored) : [];
   });

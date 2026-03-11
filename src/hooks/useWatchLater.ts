@@ -2,6 +2,7 @@ import {  useState } from "react";
 
 export const useWatchLater =()=>{
     const [watchLaterIds, setWatchLaterIds] = useState<string[]>(() => {
+      if (typeof window === "undefined") return [];
       const stored = localStorage.getItem("watch_later");
       return stored ? JSON.parse(stored) : [];
     });
