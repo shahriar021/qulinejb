@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 
 export const useWatchLater =()=>{
-    const [watchLaterIds, setWatchLaterIds] = useState<string[]>([]);
+    const [watchLaterIds, setWatchLaterIds] = useState<string[]>(() => {
+      const stored = localStorage.getItem("watch_later");
+      return stored ? JSON.parse(stored) : [];
+    });
 
-    useEffect(() => {
-        const stored = localStorage.getItem("watch_later");
-        if (stored) setWatchLaterIds(JSON.parse(stored));
-      }, []);
+   
 
       const toggleWatchLater = (movieId: number | string) => {
         const wId = String(movieId);

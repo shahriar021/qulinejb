@@ -11,12 +11,10 @@ type WatchLaterContextType = {
 const WatchLaterContext = createContext<WatchLaterContextType | undefined>(undefined);
 
 export const WatchLaterProvider = ({ children }: { children: ReactNode }) => {
-  const [watchLaterIds, setWatchLaterIds] = useState<string[]>([]);
-
-  useEffect(() => {
+  const [watchLaterIds, setWatchLaterIds] = useState<string[]>(() => {
     const stored = localStorage.getItem("watch_later");
-    if (stored) setWatchLaterIds(JSON.parse(stored));
-  }, []);
+    return stored ? JSON.parse(stored) : [];
+  });
 
   const toggleWatchLater = (movieId: number | string) => {
     const wId = String(movieId);

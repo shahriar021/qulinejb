@@ -14,7 +14,7 @@ import { useState } from "react";
 export default function GenresPage() {
   const { watchLaterIds, toggleWatchLater } = useWatchLaterContext();
   const [showSortOption, setShowSortOption] = useState(false);
-  const [sortOption, setSortOption] = useState<{} | null>(null);
+  const [sortOption, setSortOption] = useState<{ value: string; label: string } | null>(null);
   const [selectedGenre, setSelectedGenre] = useState<Genres | null>(null);
 
   const { data: getAllGenre, isLoading: isGenreLoading, error: genreError } = useGetAllGenreQuery();
